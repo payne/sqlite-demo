@@ -1,12 +1,22 @@
+
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  template: `
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  `,
+  styles: [`
+    main {
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+  `]
 })
-export class AppComponent {
-  title = 'sqlite-demo';
-}
+export class AppComponent {}
+
