@@ -9,6 +9,11 @@
     "test": "ng test"
   },
   "private": true,
+  "browser" : {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "dependencies": {
     "@angular/animations": "^19.0.0",
     "@angular/common": "^19.0.0",
