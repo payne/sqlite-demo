@@ -112,6 +112,13 @@ export class DatabaseService {
     this.saveToLocalStorage();
   }
 
+  getDatabaseExport(): Uint8Array | null {
+    if (!this.db) {
+      return null;
+    }
+    return this.db.export();
+  }
+
   async deleteTask(id: number): Promise<void> {
     if (!this.db) {
       await this.initializeDatabase();
@@ -125,5 +132,4 @@ export class DatabaseService {
     this.saveToLocalStorage();
   }
 }
-
 

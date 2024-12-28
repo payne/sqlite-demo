@@ -1,4 +1,3 @@
-
 // src/app/components/task-list/task-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,7 +17,12 @@ interface Task {
   imports: [CommonModule, FormsModule],
   template: `
     <div class="container">
-      <h1>Task List</h1>
+      <div class="header">
+        <h1>Task List</h1>
+        <button (click)="downloadDatabase()" class="download-button">
+          Download Database
+        </button>
+      </div>
       
       <div class="add-task">
         <input 
@@ -51,6 +55,26 @@ interface Task {
       max-width: 600px;
       margin: 2rem auto;
       padding: 0 1rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .download-button {
+      padding: 0.5rem 1rem;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #1976D2;
+      }
     }
 
     .add-task {
@@ -149,5 +173,29 @@ export class TaskListComponent implements OnInit {
     await this.dbService.deleteTask(id);
     await this.loadTasks();
   }
-}
 
+  downloadDatabase() {
+    const dbExport = this.dbService.getDatabaseExport();
+    if (!dbExport) {
+      alert('Database not initialized');
+      return;
+    }
+
+    // Create blob from the database export
+    const blob = new Blob([dbExport], { type: 'application/x-sqlite3' });
+    
+    // Create download link
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `tasks-${new Date().toISOString().split('T')[0]}.db`;
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    
+    // Cleanup
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }
+}
