@@ -18,3 +18,6 @@ sqlite> select * from tasks;                                                    
 sqlite>
 ```
 
+### References
+1. The YouTube [Sql.js - full SQLite in the browser by Jeffrey Codes](https://youtu.be/0DZ472GiVNw?si=7rjap0TNowAgEc9z) is very helpful :-)
+
